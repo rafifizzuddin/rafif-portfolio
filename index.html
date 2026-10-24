@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14243b">
+  <meta name="description" content="Website pribadi dan portofolio project Rafif, mahasiswa Informatika.">
+  <title>Rafif — Personal Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #14243b;
+      --navy-soft: #203752;
+      --blue: #55799c;
+      --paper: #f7f6f2;
+      --white: #fffefa;
+      --ink: #192536;
+      --muted: #687382;
+      --line: #e4e3dd;
+      --radius: 22px;
+      --shadow: 0 16px 48px rgba(20,36,59,.08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font-family: "DM Sans", sans-serif; line-height: 1.65; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    img { max-width: 100%; display: block; }
+    .wrap { width: min(1240px, calc(100% - 48px)); margin-inline: auto; }
+    .nav { position: sticky; top: 0; z-index: 20; background: rgba(247,246,242,.9); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(228,227,221,.8); }
+    .nav-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 10px; font: 800 1.08rem "Manrope", sans-serif; letter-spacing: -.04em; }
+    .brand-mark { width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; color: white; background: var(--navy); font-size: .88rem; letter-spacing: -.03em; }
+    .nav-links { display: flex; align-items: center; gap: 28px; font-size: .9rem; color: #526071; }
+    .nav-links a { transition: color .2s; }
+    .nav-links a:hover { color: var(--navy); }
+    .nav-links .contact-link { background: var(--navy); color: white; padding: 10px 16px; border-radius: 999px; }
+    .menu-btn { display: none; background: transparent; border: 1px solid var(--line); border-radius: 12px; width: 42px; height: 42px; color: var(--navy); cursor: pointer; }
+    .hero { padding: 74px 0 88px; }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: clamp(36px, 7vw, 88px); }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--blue); font-size: .78rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+    .eyebrow:before { content: ""; width: 24px; height: 1px; background: currentColor; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { font-family: "Manrope", sans-serif; letter-spacing: -.055em; line-height: 1.12; }
+    h1 { margin: 20px 0 22px; max-width: 620px; font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 700; }
+    h1 span { color: var(--blue); }
+    .hero-copy { color: var(--muted); max-width: 470px; font-size: 1.05rem; line-height: 1.85; }
+    .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 30px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid var(--navy); border-radius: 999px; padding: 13px 20px; font-weight: 700; font-size: .9rem; transition: transform .2s, background .2s; cursor: pointer; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--navy); color: white; }
+    .btn-secondary { color: var(--navy); background: transparent; border-color: #d6d9dc; }
+    .photo-area { position: relative; max-width: 430px; width: 100%; justify-self: end; }
+    .photo-frame { position: relative; z-index: 1; aspect-ratio: 4 / 4.6; border-radius: 48% 48% 24px 24px; overflow: hidden; background: #dce3e8; border: 8px solid var(--white); box-shadow: var(--shadow); }
+    .photo-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .photo-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; color: #52677b; background: linear-gradient(145deg,#dfe6e9,#c4d2dc); }
+    .photo-placeholder .initials { font: 800 clamp(4rem, 10vw, 7rem) "Manrope", sans-serif; letter-spacing: -.1em; color: var(--navy); }
+    .photo-placeholder small { margin-top: 12px; font-size: .8rem; max-width: 190px; }
+    .photo-note { position: absolute; z-index: 2; bottom: 24px; left: -40px; background: var(--white); padding: 15px 18px; border-radius: 16px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 11px; font-size: .84rem; }
+    .note-dot { width: 10px; height: 10px; background: #6f9c83; border-radius: 50%; box-shadow: 0 0 0 5px #e8f0e9; }
+    .photo-deco { position: absolute; width: 110px; height: 110px; border: 1px solid #aebdca; border-radius: 50%; right: -27px; top: -25px; }
+    .section { padding: 82px 0; }
+    .section-white { background: var(--white); }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 28px; margin-bottom: 34px; }
+    .section-kicker { color: var(--blue); font-size: .77rem; font-weight: 700; text-transform: uppercase; letter-spacing: .13em; margin-bottom: 12px; }
+    h2 { font-size: clamp(2rem, 4vw, 3.15rem); margin-bottom: 0; }
+    .section-intro { max-width: 390px; color: var(--muted); margin-bottom: 3px; }
+    .about-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 70px; align-items: start; }
+    .about-quote { background: var(--navy); color: white; padding: 30px; border-radius: var(--radius); min-height: 240px; display: flex; flex-direction: column; justify-content: space-between; }
+    .quote-mark { font: 700 3.5rem Georgia, serif; color: #91abc4; line-height: .8; }
+    .about-quote p { font: 600 1.45rem/1.5 "Manrope", sans-serif; letter-spacing: -.04em; margin: 20px 0 24px; }
+    .about-quote small { color: #b9c7d5; }
+    .about-text p { color: var(--muted); }
+    .facts { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-top: 26px; }
+    .fact { padding: 15px 16px; border: 1px solid var(--line); border-radius: 14px; }
+    .fact b { display: block; font-size: .88rem; margin-bottom: 3px; }
+    .fact span { color: var(--muted); font-size: .82rem; }
+    .project-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 22px; }
+    .project-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: transform .25s, box-shadow .25s; }
+    .project-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .project-visual { height: 225px; padding: 22px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .visual-wallet { background: #e8ece5; }
+    .wallet-ui { width: 82%; max-width: 330px; background: #fffefa; border-radius: 14px; padding: 16px; box-shadow: 0 14px 35px #20375218; transform: rotate(-2deg); }
+    .mini-top { display: flex; justify-content: space-between; align-items: center; font-size: .65rem; color: #687382; }
+    .wallet-balance { margin: 15px 0 12px; background: var(--navy); color: white; border-radius: 10px; padding: 15px; }
+    .wallet-balance small { display: block; color: #bac7d5; font-size: .62rem; }
+    .wallet-balance strong { display: block; font: 700 1.3rem "Manrope",sans-serif; margin-top: 4px; }
+    .fake-bars { display: flex; align-items: end; gap: 7px; height: 43px; margin-top: 10px; }
+    .fake-bars i { flex: 1; background: #91aa9a; border-radius: 4px 4px 0 0; }
+    .fake-bars i:nth-child(1){height:40%}.fake-bars i:nth-child(2){height:65%}.fake-bars i:nth-child(3){height:48%}.fake-bars i:nth-child(4){height:88%}.fake-bars i:nth-child(5){height:72%}.fake-bars i:nth-child(6){height:100%}
+    .visual-notes { background: #e7e9f0; }
+    .notes-ui { width: 82%; max-width: 330px; display: grid; grid-template-columns: .65fr 1fr; gap: 9px; transform: rotate(2deg); }
+    .notes-side { background: #243650; border-radius: 12px; padding: 13px 9px; color: #e9edf4; font-size: .6rem; }
+    .notes-side b { display:block; margin-bottom: 13px; font-size: .75rem; }
+    .notes-side span { display:block; padding: 6px 4px; border-radius: 5px; color: #c6d2df; }
+    .notes-side span:first-of-type { background: #3a506c; color: white; }
+    .notes-main { background: #fffefa; border-radius: 12px; padding: 15px; }
+    .notes-main b { font: 700 .9rem "Manrope",sans-serif; }
+    .notes-main p { font-size: .6rem; color: #7b8490; margin: 7px 0 12px; }
+    .note-line { height: 6px; border-radius: 4px; background: #e9ebef; margin-top: 8px; }
+    .note-line.short { width: 65%; }
+    .visual-game { background: #e9e3d8; }
+    .board { width: 180px; height: 180px; padding: 8px; background: #e9d6a9; border: 5px solid #27384a; display: grid; grid-template-columns: repeat(4,1fr); gap: 4px; transform: rotate(-4deg); box-shadow: 9px 10px 0 #27384a20; }
+    .board span { background: #f8f2e4; border: 1px solid #c7b78e; border-radius: 3px; }
+    .board span:nth-child(3n) { background: #7f9e92; }
+    .board span:nth-child(4n) { background: #d88e65; }
+    .visual-profile { background: #dce7eb; }
+    .profile-ui { width: 84%; max-width: 330px; background: #fdfcf8; border-radius: 15px; padding: 18px; box-shadow: 0 14px 35px #20375218; }
+    .profile-top { display: flex; align-items: center; gap: 12px; }
+    .avatar-mini { width: 42px; height: 42px; border-radius: 50%; background: #c1d0d7; display:grid; place-items:center; color:var(--navy); font-weight:800; }
+    .profile-top b { display:block; font-size:.76rem; }.profile-top small { color:#7b8490; font-size:.62rem; }
+    .profile-chip { display:inline-block; margin-top:15px; background:#e9eef0; color:#4e667b; border-radius:99px; padding:5px 9px; font-size:.62rem; }
+    .project-body { padding: 22px 24px 24px; }
+    .project-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 11px; }
+    .project-meta span { color: var(--blue); text-transform: uppercase; font-size: .7rem; letter-spacing: .1em; font-weight: 700; }
+    .project-meta small { color: #9098a1; }
+    .project-body h3 { font-size: 1.35rem; margin-bottom: 10px; }
+    .project-body p { color: var(--muted); font-size: .91rem; margin-bottom: 17px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tags span { border: 1px solid var(--line); border-radius: 999px; padding: 5px 10px; color: #596574; font-size: .72rem; }
+    .project-links { display: flex; gap: 17px; margin-top: 18px; font-size: .84rem; font-weight: 700; }
+    .project-links a { border-bottom: 1px solid #b7c2cc; padding-bottom: 2px; }
+    .project-links a:hover { color: var(--blue); }
+    .more-projects { margin-top: 24px; color: var(--muted); font-size: .88rem; }
+    .learning-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .learning-item { display: flex; gap: 17px; padding: 22px; background: var(--paper); border: 1px solid var(--line); border-radius: 17px; }
+    .learning-number { flex: 0 0 42px; height: 42px; border-radius: 13px; display: grid; place-items: center; background: #e5ebef; color: var(--navy); font-weight: 800; font-size: .85rem; }
+    .learning-item h3 { font-size: 1.05rem; margin-bottom: 6px; letter-spacing: -.03em; }
+    .learning-item p { margin: 0; color: var(--muted); font-size: .86rem; }
+    .contact { background: var(--navy); color: white; padding: 65px 0; }
+    .contact-inner { display: flex; justify-content: space-between; align-items: center; gap: 32px; }
+    .contact .section-kicker { color: #a5bdd3; }
+    .contact h2 { max-width: 550px; margin-bottom: 15px; }
+    .contact p { color: #c1ccda; max-width: 470px; margin-bottom: 0; }
+    .contact .btn { background: white; color: var(--navy); border-color: white; flex-shrink: 0; }
+    .footer { background: #101d30; color: #c1ccda; padding: 23px 0; font-size: .8rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 18px; align-items: center; }
+    .socials { display: flex; gap: 18px; }
+    .socials a:hover { color: white; }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } .reveal { opacity: 1; transform: none; } }
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 32px, 560px); }
+      .nav-inner { min-height: 68px; }
+      .menu-btn { display: grid; place-items: center; }
+      .nav-links { display: none; position: absolute; top: 67px; left: 0; right: 0; padding: 18px 24px 22px; flex-direction: column; align-items: stretch; gap: 4px; background: var(--paper); border-bottom: 1px solid var(--line); }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 11px 8px; }
+      .nav-links .contact-link { text-align: center; margin-top: 6px; }
+      .hero { padding: 46px 0 65px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 42px; }
+      .hero-copy { font-size: 1rem; }
+      .photo-area { width: min(84%, 370px); justify-self: center; margin: 0 auto; }
+      .photo-note { left: -18px; bottom: 18px; padding: 12px 14px; }
+      .photo-deco { right: -18px; width: 82px; height: 82px; }
+      .section { padding: 62px 0; }
+      .section-head { display: block; }
+      .section-intro { margin-top: 17px; }
+      .about-grid { grid-template-columns: 1fr; gap: 25px; }
+      .about-quote { min-height: 210px; }
+      .project-grid { grid-template-columns: 1fr; gap: 18px; }
+      .project-visual { height: 210px; }
+      .learning-grid { grid-template-columns: 1fr; }
+      .contact-inner { display: block; }
+      .contact .btn { margin-top: 25px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+    @media (max-width: 390px) {
+      h1 { font-size: 2.65rem; }
+      .facts { grid-template-columns: 1fr; }
+      .hero-actions .btn { width: 100%; }
+      .project-body { padding: 20px; }
+    }
+
+
+    .prestasi {
+      margin-top: 32px;
+      scroll-margin-top: 100px;
+    }
+
+    .prestasi-heading {
+      margin-bottom: 18px;
+    }
+
+    .prestasi-kicker {
+      color: var(--blue);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+    }
+
+    .prestasi-heading h3 {
+      margin: 8px 0;
+      font-size: 1.35rem;
+      letter-spacing: -0.04em;
+    }
+
+    .prestasi-heading p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+
+    .prestasi-card {
+      padding: 24px;
+      border: 1px solid #dce4eb;
+      border-radius: 18px;
+      background: #eef2f6;
+      color: var(--navy);
+    }
+
+    .prestasi-tahun {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--blue);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .prestasi-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      letter-spacing: -0.03em;
+    }
+
+    .prestasi-card p {
+      margin-bottom: 14px;
+      color: #526071;
+      font-size: 0.9rem;
+      line-height: 1.75;
+    }
+
+    .prestasi-label {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #dce7f0;
+      color: #294866;
+      font-size: 0.76rem;
+      font-weight: 600;
+    }
+
+
+
+    
+.prestasi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.prestasi-grid .prestasi-card {
+  min-width: 0;
+  height: 100%;
+}
+
+.prestasi-list {
+  display: grid;
+  gap: 14px;
+  padding: 0;
+  margin: 18px 0;
+  list-style: none;
+}
+
+.prestasi-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-left: 12px;
+  border-left: 3px solid #c6d6e4;
+}
+
+.prestasi-list strong {
+  color: var(--navy);
+  font-size: 0.9rem;
+}
+
+.prestasi-list li span {
+  color: #526071;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 760px) {
+  .prestasi-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#home" aria-label="Kembali ke beranda"><span class="brand-mark">MRI</span><span>Muhammad Rafif Izzuddin<span style="color:#55799c">.</span></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Buka menu" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <nav class="nav-links" id="navLinks" aria-label="Navigasi utama">
+        <a href="#about">Tentang</a>
+        <a href="#prestasi">Prestasi</a>
+        <a href="#projects">Project</a>
+        <a href="#learning">Yang kupelajari</a>
+        <a class="contact-link" href="#contact">Hubungi saya ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap hero-grid">
+        <div class="hero-content reveal">
+          <div class="eyebrow">Halo, selamat datang</div>
+          <h1>Hai, aku <span>Rafif.</span><br> </h1>
+          <p class="hero-copy">Mahasiswa Informatika yang sedang belajar membangun sesuatu lewat kode. Di sini aku menyimpan project, hal-hal yang sedang kupelajari, dan hal-hal kecil yang ingin kubagikan..</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">Lihat project <span aria-hidden="true">↘</span></a>
+            <a class="btn btn-secondary" href="#about">Kenalan dulu</a>
+          </div>
+        </div>
+
+        <div class="photo-area reveal">
+          <div class="photo-deco"></div>
+            <div class="photo-frame" id="photoFrame">
+              <img id="profilePhoto" src="foto-saya.jpg" alt="Foto Rafif">
+          </div>
+          <div class="photo-note">
+            <span class="note-dot"></span>
+            <span><b>Masih dalam proses</b><br><span style="color:#687382">Belajar, mencoba, evaluasi.</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-white" id="about">
+      <div class="wrap">
+  <div class="about-grid">
+        <div class="about-quote reveal">
+          <span class="quote-mark">“</span>
+          <p>Start where you are. Use what you have. Do what you can.</p>
+          <small>Catatan kecil dari perjalanan belajarku.</small>
+        </div>
+        <div class="about-text reveal">
+          <div class="section-kicker">Sedikit tentangku</div>
+          <h2 hidden>Bukan sudah jago.<br>Lagi berproses.</h2>
+          <p>Aku mahasiswa Informatika di Universitas Pembangunan Nasional “Veteran” Jawa Timur. Saat ini aku sedang mengenal dunia pemrograman lebih dalam, mencoba ide-ide sederhana, dan belajar menyelesaikan masalah lewat teknologi.</p>
+          <p>Menurutku, project kecil pun tetap berarti kalau dari situ ada hal baru yang dipahami. Website ini jadi tempat untuk mendokumentasikan proses itu—termasuk hal yang belum sempurna.</p>
+          <div class="facts">
+            <div class="fact"><b>📍 Domisili Saat Ini</b><span>Surabaya, Indonesia</span></div>
+            <div class="fact"><b>🎓 Pendidikan</b><span>S1 Informatika UPNVJT</span></div>
+            <div class="fact"><b>🏫 Sekolah Sebelumnya</b><span>SMAN 4 Bojonegoro (Peminatan Teknik) & SMPN 5 Bojonegoro</span></div>
+            <div class="fact"><b>🛠️ Sedang mendalami</b><span>HTML, CSS, JavaScript</span></div>
+            </div>
+          </div>
+        </div>
+
+<div id="prestasi" class="prestasi">
+  <div class="prestasi-heading">
+    <span class="prestasi-kicker">PENCAPAIAN</span>
+    <h3>Prestasi yang Pernah Diraih</h3>
+    <p>Beberapa pencapaian yang menjadi bagian dari perjalanan belajarku.</p>
+  </div>
+
+  <div class="prestasi-grid">
+    <!-- Prestasi 1 -->
+    <div class="prestasi-card">
+      <span class="prestasi-tahun">🏆 2023</span>
+      <h3>10 Besar Olimpiade OLIPS</h3>
+      <p>
+        Pernah masuk 10 besar Olimpiade OLIPS yang
+        diselenggarakan oleh Universitas Pendidikan
+        Indonesia (UPI), Bandung, saat masih SMP.
+      </p>
+      <span class="prestasi-label">Prestasi · Tingkat Nasional (SMP)</span>
+    </div>
+
+    <!-- Prestasi 2 -->
+    <div class="prestasi-card">
+      <span class="prestasi-tahun">🎓 Akademik</span>
+      <h3>Prestasi Akademik</h3>
+
+      <ul class="prestasi-list">
+        <li>
+          <strong>Peringkat II</strong>
+          <span>Kelas XI-1 · Tahun Pelajaran 2024/2025</span>
+        </li>
+        <li>
+          <strong>Peringkat I</strong>
+          <span>Kelas XII-1 · Tahun Pelajaran 2025/2026</span>
+        </li>
+        <li>
+          <strong>Nilai ijazah tertinggi</strong>
+          <span>Kelas XII-1 · Tahun Pelajaran 2025/2026</span>
+        </li>
+      </ul>
+
+      <span class="prestasi-label">Prestasi Akademik</span>
+    </div>
+  </div>
+</div>
+
+      </div>
+    </section>
+
+    
+    <section class="section" id="projects">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="section-kicker">Yang pernah kubuat</div><h2>Project pilihan.</h2></div>
+          <p class="section-intro">Beberapa ide yang kuubah jadi project. Sebagian masih terus dikembangkan—dan itu bagian dari prosesnya.</p>
+        </div>
+        <div class="project-grid">
+          <article class="project-card reveal">
+            <div class="project-visual visual-wallet" aria-label="Ilustrasi aplikasi catatan keuangan">
+              <div class="wallet-ui"><div class="mini-top"><b>dompet kost</b><span>Oktober ↗</span></div><div class="wallet-balance"><small>Total saldo</small><strong>Rp 1.250.000</strong><small style="margin-top:8px">Ringkasan bulan ini</small></div><div class="mini-top"><b>Pengeluaran</b><span>Detail →</span></div><div class="fake-bars"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+            </div>
+            <div class="project-body">
+              <div class="project-meta"><span>01 / Keuangan</span><small>Personal project</small></div>
+              <h3>Dompet Kost</h3>
+              <p>Aplikasi sederhana untuk mencatat pemasukan dan pengeluaran sehari-hari, melihat ringkasan keuangan, dan mengekspor catatan.</p>
+              <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>PWA</span></div>
+              <div class="project-links"><a href="https://rafifizzuddin.github.io/Dompet-digital-anak-kos/" data-placeholder-link>Akses project ↗</a><a href="https://github.com/rafifizzuddin/Dompet-digital-anak-kos.git" data-placeholder-link>Source code ↗</a></div>
+            </div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-visual visual-notes" aria-label="Ilustrasi aplikasi catatan digital">
+              <div class="notes-ui"><div class="notes-side"><b>smart notes</b><span>✦ Semua catatan</span><span>☑ Tugas</span><span>◷ Pengingat</span><span>☆ Prioritas</span></div><div class="notes-main"><b>Rencana minggu ini</b><p>Jangan lupa selesaikan satu per satu.</p><div class="note-line"></div><div class="note-line short"></div><div class="note-line"></div><div class="note-line short"></div></div></div>
+            </div>
+            <div class="project-body">
+              <div class="project-meta"><span>02 / Produktivitas</span><small>Personal project</small></div>
+              <h3>Smart Notes</h3>
+              <p>Catatan digital untuk menyimpan ide, mengatur tugas, dan menandai deadline supaya hal-hal kecil nggak gampang terlewat.</p>
+              <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Local storage</span></div>
+              <div class="project-links"><a href="https://rafifizzuddin.github.io/catatan-tugas/" data-placeholder-link>Akses project ↗</a><a href="https://github.com/rafifizzuddin/catatan-tugas.git" data-placeholder-link>Source code ↗</a></div>
+            </div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-visual visual-game" aria-label="Ilustrasi papan permainan">
+              <div class="board"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            </div>
+            <div class="project-body">
+              <div class="project-meta"><span>03 / Game</span><small>Eksperimen</small></div>
+              <h3>Play Room</h3>
+              <p>Berbagai permainan yang dapat dijalankan melalui browser, cocok dimainkan bersama teman.</p>
+              <div class="tags"><span>JavaScript</span><span>Game logic</span><span>Local storage</span></div>
+              <div class="project-links"><a href="https://rafifizzuddin.github.io/PlayRoom/" data-placeholder-link>Akses project ↗</a><a href="https://github.com/rafifizzuddin/PlayRoom.git" data-placeholder-link>Source code ↗</a></div>
+            </div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-visual visual-profile" aria-label="Ilustrasi website profil pribadi">
+              <div class="profile-ui"><div class="profile-top"><div class="avatar-mini">R.</div><div><b>Halo, aku Rafif</b><small>Informatics student</small></div></div><span class="profile-chip">Curious by nature · Learning by building</span><div class="note-line" style="margin-top:18px"></div><div class="note-line"></div><div class="note-line short"></div></div>
+            </div>
+            <div class="project-body">
+              <div class="project-meta"><span>04 / Web</span><small>Personal website</small></div>
+              <h3>Website Portofolio</h3>
+              <p>Tempat perkenalan diri dan dokumentasi project, dirancang ringan supaya nyaman dibuka lewat link bio Instagram.</p>
+              <div class="tags"><span>HTML</span><span>CSS</span><span>Responsive</span></div>
+              <div class="project-links"><a href="#home">Sedang kamu lihat ↗</a></div>
+            </div>
+          </article>
+        </div>
+        <p class="more-projects">Punya project baru? Bagian ini bisa ditambah kapan saja. Link demo dan GitHub di atas masih berupa placeholder—ganti dengan link milikmu.</p>
+      </div>
+    </section>
+
+    <section class="section section-white" id="learning">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="section-kicker">Sedang bertumbuh</div><h2>Hal yang kupelajari.</h2></div>
+          <p class="section-intro">Nggak harus menguasai semuanya sekaligus. Untuk sekarang, aku fokus membangun dasar yang kuat.</p>
+        </div>
+        <div class="learning-grid">
+          <div class="learning-item reveal"><div class="learning-number">01</div><div><h3>Dasar pemrograman</h3><p>Melatih logika, memecah masalah, dan menyusun langkah sebelum menulis kode.</p></div></div>
+          <div class="learning-item reveal"><div class="learning-number">02</div><div><h3>Web development</h3><p>Belajar bikin website yang enak dipakai, cepat dibuka, dan tetap rapi di layar kecil.</p></div></div>
+          <div class="learning-item reveal"><div class="learning-number">03</div><div><h3>Membangun project</h3><p>Mengubah ide sehari-hari menjadi sesuatu yang bisa dicoba dan dipakai.</p></div></div>
+          <div class="learning-item reveal"><div class="learning-number">04</div><div><h3>Belajar dari proses</h3><p>Membaca error, mencari solusi, dan memperbaiki hal-hal yang belum berjalan baik.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="wrap contact-inner reveal">
+        <div>
+          <div class="section-kicker">Punya ide atau mau ngobrol?</div>
+          <h2>Yuk, terhubung.</h2>
+          <p>Terbuka untuk ngobrol soal project, belajar bareng, atau sekadar bertukar ide seputar teknologi.</p>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; flex-shrink: 0;">
+          <a class="btn" href="ttps://www.instagram.com/m.rafifizzuddin/" target="_blank" style="background: white; color: var(--navy); border-color: white;">Instagram ↗</a>
+          <a class="btn" href="https://id.linkedin.com/in/m-rafif-izzuddin-7a91383a4" target="_blank" style="background: white; color: var(--navy); border-color: white;">LinkedIn ↗</a>
+          <a class="btn" href="https://github.com/rafifizzuddin" target="_blank" style="background: transparent; color: white; border-color: white;">GitHub ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>© <span id="year"></span> Rafif. Dibuat sambil belajar.</span>
+
+      <div class="socials">
+        <a
+          href="mailto:muhammadrafifizzuddin@gmail.com?subject=Laporkan%20Kesalahan%20Website&body=Halo%20Rafif%2C%0A%0ABagian%20yang%20bermasalah%3A%0A%0ADeskripsi%20kesalahan%3A"
+        >
+          Laporkan Kesalahan
+        </a>
+
+        <a
+          href="mailto:muhammadrafifizzuddin@gmail.com?subject=Kritik%20dan%20Saran%20Website&body=Halo%20Rafif%2C%0A%0AKritik%20atau%20saran%20saya%3A%0A"
+        >
+          Kritik &amp; Saran
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Ganti data berikut dengan akun dan kontak milikmu.
+    const PROFILE = {
+      instagram: "wa.me/6285156568679",
+      github: "wa.me/6285156568679",
+      email: "emailkamu@example.com"
+    };
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+    menuBtn.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", String(isOpen));
+    });
+    navLinks.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menuBtn.setAttribute("aria-expanded", "false");
+    }));
+
+    document.querySelectorAll("[data-edit-link]").forEach(link => {
+      const key = link.dataset.editLink;
+      if (PROFILE[key]) link.href = key === "email" ? `mailto:${PROFILE.email}` : PROFILE[key];
+    });
+
+    // Link yang belum diisi tidak akan berpindah ke halaman yang tidak relevan.
+    document.querySelectorAll("[data-placeholder-link]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (link.getAttribute("href") === "#") {
+          event.preventDefault();
+          alert("Ganti link ini dengan URL live demo atau repository GitHub project kamu.");
+        }
+      });
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
